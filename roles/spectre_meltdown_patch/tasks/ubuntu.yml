@@ -1,0 +1,17 @@
+---
+
+- name: Upgrade Ubuntu Linux Kernels
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - linux-aws
+    - linux-headers-aws
+    - linux-image-aws
+  become: yes
+  tags:
+    - ubuntu
+  when: ansible_distribution_major_version == "16" or ansible_distribution_major_version == "14"
+  # notify:
+  #   - "reboot host"

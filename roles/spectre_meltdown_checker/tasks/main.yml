@@ -1,0 +1,20 @@
+---
+
+- name: Copy script
+  copy:
+    src: spectre-meltdown-checker.sh
+    dest: "/usr/local/bin/spectre-meltdown-checker"
+    mode: 0755
+  tags:
+    - copy_script
+  become: yes
+
+- name: Check for the vulnerability
+  command: /usr/local/bin/spectre-meltdown-checker --batch text
+  become: yes
+  ignore_errors: yes
+  register: spectre_meltdown_checker_result
+  # failed_when: spectre_meltdown_checker_result.rc != 0
+
+- debug:
+    var: spectre_meltdown_checker_result.stdout_lines

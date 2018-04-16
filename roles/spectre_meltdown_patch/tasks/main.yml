@@ -1,0 +1,12 @@
+---
+
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+  tags: package
+
+- include_tasks: redhat.yml
+  when: ansible_distribution == "CentOS"
+  tags: package
+
+- include_tasks: amazon.yml
+  when: ansible_distribution == "Amazon"

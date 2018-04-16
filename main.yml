@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+  pre_tasks:
+    - name: Install binutils for objdump
+      apt:
+        name: binutils
+      become: yes
+      tags:
+        - check
+        - skip
+      when: (ansible_os_family == "Debian")
+
+    - name: Install binutils for objdump
+      yum:
+        name: binutils
+      become: yes
+      tags:
+        - check
+        - skip
+      when: (ansible_os_family == "RedHat")
+  roles:
+    - { role: spectre_meltdown_patch, tags: ['patch', 'skip']}
+    - { role: spectre_meltdown_checker, tags: ['check', 'skip'] }
